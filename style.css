@@ -19,10 +19,18 @@ body {
     text-align: center;
 }
 
+/* 💥 จัดรูปแบบ Header 2 บรรทัด 💥 */
 header h1 {
     color: #1976d2; /* Main Blue */
     margin-top: 5px;
     font-size: 2em;
+    line-height: 1.1; 
+}
+
+header h1 span {
+    display: block; /* Force BUBBLE LAB to new line */
+    font-size: 0.7em; 
+    color: #0d47a1; /* Darker color for emphasis */
 }
 
 header i {
@@ -100,11 +108,13 @@ header i {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    justify-content: space-around;
+    /* 💥 ทำให้ปุ่มอยู่ตรงกลางเพื่อความสมมาตร 💥 */
+    justify-content: center; 
 }
 
 .grid-options {
-    grid-template-columns: 1fr 1fr;
+    /* ปรับ grid ให้มีพื้นที่ว่างด้านข้างถ้าจำนวนปุ่มไม่เต็มแถว */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
 
 /* Buttons */
