@@ -27,10 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedFragrance = null;
     let selectedTablets = null;
     
-    // Optimal Values (Adjusted for 1-4 tablets)
+    // Optimal Values 
     const OPTIMAL_WATER_OZ = 9;
-    const OPTIMAL_TABLET_MIN = 2; // New optimal range for 1-4 tablets
-    const OPTIMAL_TABLET_MAX = 3;
+    
+    // 💥 เปลี่ยน Optimal Tablet เป็น 1 ตามที่ร้องขอ 💥
+    const OPTIMAL_TABLET = 1; 
+    
     const TARGET_QUALITY = 100;
 
     const FRAGRANCES = {
@@ -158,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let concentrationStatus = '';
 
         // 1. Score based on Water (Max 50 points)
-        if (selectedWater === OPTIMAL_WATER_OZ) {
+        if (selectedWater === OPTIMAL_WATER_OZ) { // 9 Oz
             quality += 50;
             concentrationStatus = 'Perfect';
         } else if (selectedWater < OPTIMAL_WATER_OZ) { // 6 oz (Concentrated)
@@ -170,12 +172,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // 2. Score based on Tablets (Max 50 points)
-        if (selectedTablets >= OPTIMAL_TABLET_MIN && selectedTablets <= OPTIMAL_TABLET_MAX) { // 2 or 3 Tablets
-            quality += 50;
-        } else if (selectedTablets === 1) { 
-            quality += 20; // Too weak
+        // 💥 1 Tablet คือ Perfect Score (50 คะแนน) 💥
+        if (selectedTablets === OPTIMAL_TABLET) { // 1 Tablet
+            quality += 50; 
+        } else if (selectedTablets === 2 || selectedTablets === 3) { 
+            quality += 30; // 2 or 3 tablets gives a decent score
         } else { // 4 Tablets (Too strong/foamy)
-            quality += 30;
+            quality += 20; // 4 tablets gives a low score
         }
         
         return { quality, concentrationStatus };
