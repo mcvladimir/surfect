@@ -182,8 +182,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else if (selectedTablets === 2 || selectedTablets === 3) { 
             quality += 30; // Decent score for 2 or 3 tablets
-        } else { // 4 Tablets (Too strong/foamy)
-            quality += 20; // Low score for 4 tablets
+        } else { 
+            // 💥 4, 5, 6 Tablets (Too strong/foamy) 💥
+            quality += 20; // Low score for 4, 5, or 6 tablets
         }
         
         return { quality, concentrationStatus };
