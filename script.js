@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const OPTIMAL_WATER_OZ = 9;
     const OPTIMAL_TABLET = 1; 
     
-    // 💥 กลิ่นที่ให้ Perfect Score 💥
+    // 💥 กลิ่นที่ให้ Perfect Score: 9 Oz + 1 Tablet + (Lavender Eucalyptus, Iris Agave, หรือ Perrine Lemon) จะได้ 100 คะแนนเต็ม 💥
     const OPTIMAL_FRAGRANCES = ['Lavender Eucalyptus', 'Iris Agave', 'Perrine Lemon'];
     
     const TARGET_QUALITY = 100;
@@ -70,6 +70,51 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to update 'Enter' button status
     const updateNavigationButton = (button, selectionState) => {
         button.disabled = selectionState === null;
+    };
+
+    // 💥 New: Bubble Animation Functions 💥
+    let bubbleInterval; // To store the interval ID for clearing
+
+    const createBubbles = () => {
+        const bubbleContainer = document.createElement('div');
+        bubbleContainer.className = 'bubble-container';
+        mixingScreen.appendChild(bubbleContainer);
+
+        let bubbleCount = 0;
+        bubbleInterval = setInterval(() => {
+            if (bubbleCount >= 20) { // Limit number of bubbles for performance
+                clearInterval(bubbleInterval);
+                return;
+            }
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = Math.random() * 30 + 20; // Size between 20px and 50px
+            const left = Math.random() * 90; // Position from 0% to 90%
+            const animationDuration = Math.random() * 3 + 2; // Duration 2s to 5s
+
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            bubble.style.left = `${left}%`;
+            bubble.style.animationDuration = `${animationDuration}s`;
+            bubble.style.animationDelay = `${Math.random() * 1}s`; // Stagger start times
+
+            bubbleContainer.appendChild(bubble);
+            bubbleCount++;
+
+            // Remove bubble after animation to prevent DOM clutter
+            bubble.addEventListener('animationend', () => {
+                bubble.remove();
+            });
+
+        }, 200); // Create a new bubble every 200ms
+    };
+
+    const stopBubbles = () => {
+        clearInterval(bubbleInterval);
+        const bubbleContainer = mixingScreen.querySelector('.bubble-container');
+        if (bubbleContainer) {
+            bubbleContainer.remove(); // Remove all bubbles
+        }
     };
 
     // --- Event Listeners ---
@@ -127,9 +172,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!mixButton.disabled) {
             gameScreen.classList.add('hidden');
             mixingScreen.classList.remove('hidden');
+            createBubbles(); // 💥 เริ่มแอนิเมชันฟองสบู่ 💥
 
             // Simulate mixing time (3 seconds)
-            setTimeout(calculateResult, 3000);
+            setTimeout(() => {
+                stopBubbles(); // 💥 หยุดแอนิเมชันฟองสบู่ 💥
+                calculateResult();
+            }, 3000);
         }
     });
 
@@ -164,27 +213,27 @@ document.addEventListener('DOMContentLoaded', () => {
         if (selectedWater === OPTIMAL_WATER_OZ) { // 9 Oz
             quality += 50;
             concentrationStatus = 'Perfect';
-        } else if (selectedWater < OPTIMAL_WATER_OZ) { // 6 oz (Concentrated)
+        } else if (selectedWater < OPTIMAL_WATER_OZ) { // 6 oz (Concentrated - Too much soap relative to water)
             quality += 20;
             concentrationStatus = 'Concentrated';
-        } else { // 12 oz (Diluted)
+        } else { // 12 oz (Diluted - Too much water relative to soap)
             quality += 30;
             concentrationStatus = 'Diluted';
         }
 
         // 2. Score based on Tablets/Fragrance (Max 50 points)
-        if (selectedTablets === OPTIMAL_TABLET) { // 1 Tablet
-            // 💥 ตรวจสอบว่า 1 Tablet ถูกจับคู่กับกลิ่นที่ถูกต้องหรือไม่ 💥
+        if (selectedTablets === OPTIMAL_TABLET) { // 1 Tablet (Optimal)
+            // 💥 Perfect Score Condition 💥: 1 Tablet + Optimal Scent
             if (OPTIMAL_FRAGRANCES.includes(selectedFragrance)) {
-                quality += 50; // Perfect score condition (1 Tablet + Optimal Scent)
+                quality += 50; // Perfect score (1 Tablet + Correct Scent)
             } else {
                 quality += 40; // High score (1 Tablet but non-optimal scent)
             }
         } else if (selectedTablets === 2 || selectedTablets === 3) { 
-            quality += 30; // Decent score for 2 or 3 tablets
+            quality += 30; // Decent score for 2 or 3 tablets (Slightly too concentrated)
         } else { 
             // 💥 4, 5, 6 Tablets (Too strong/foamy) 💥
-            quality += 20; // Low score for 4, 5, or 6 tablets
+            quality += 20; // Low score for 4, 5, or 6 tablets (Far too concentrated/wasteful)
         }
         
         return { quality, concentrationStatus };
