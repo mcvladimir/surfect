@@ -1,195 +1,207 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // --- DOM Elements ---
-  const gameScreen = document.getElementById("game-screen");
-  const mixingScreen = document.getElementById("mixing-screen");
-  const resultScreen = document.getElementById("result-screen");
-  const mixButton = document.getElementById("mix-button");
-  const resetButton = document.getElementById("reset-button");
-  const waterOptions = document.getElementById("water-options");
-  const fragranceOptions = document.getElementById("fragrance-options");
-  const pelletsInput = document.getElementById("pellets-input");
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e3f2fd; /* Light Blue Background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #1a237e; /* Dark Blue Text */
+}
 
-  // --- Game State ---
-  let selectedWater = null;
-  let selectedFragrance = null;
-  let selectedPellets = 7;
+.container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(25, 118, 210, 0.2); /* Blue Shadow */
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
+}
 
-  const FRAGRANCES = {
-    "Iris Agave": "purple",
-    "Perrine Lemon": "yellow",
-    "Lavender Eucalyptus": "violet",
-    "Pacific Mist": "blue",
-    "Cedar Fig": "brown",
-    "Fragrance-free": "grey",
-  };
+header h1 {
+    color: #1976d2; /* Main Blue */
+    margin-top: 5px;
+    font-size: 2em;
+}
 
-  const OPTIMAL_WATER_OZ = 9;
-  const OPTIMAL_PELLET_MIN = 5;
-  const OPTIMAL_PELLET_MAX = 8;
-  const TARGET_QUALITY = 100;
+header i {
+    font-size: 2.5em;
+    color: #1976d2;
+}
 
-  // --- Helper Functions ---
+.hidden {
+    display: none !important;
+}
 
-  // Function to update the MIX button state
-  const updateMixButton = () => {
-    mixButton.disabled = !(
-      selectedWater !== null && selectedFragrance !== null
-    );
-  };
+/* --- Modal Styles --- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(25, 118, 210, 0.9); /* Opaque Blue Overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
 
-  // Function to inject fragrance buttons into the DOM
-  const renderFragranceButtons = () => {
-    for (const [scent, color] of Object.entries(FRAGRANCES)) {
-      const button = document.createElement("button");
-      button.className = "btn fragrance-btn";
-      button.dataset.scent = scent;
-      button.innerHTML = `<i class="fas fa-droplet" style="color:${color};"></i> ${scent}`;
-      fragranceOptions.appendChild(button);
-    }
-  };
+.modal-content {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 350px;
+}
 
-  // --- Event Listeners ---
+.welcome-icon {
+    font-size: 4em;
+    color: #0d47a1; /* Darker Blue */
+    margin-bottom: 15px;
+}
 
-  // 1. Water Selection
-  waterOptions.addEventListener("click", (e) => {
-    const target = e.target;
-    if (target.classList.contains("water-btn")) {
-      // Remove 'selected' from all
-      document
-        .querySelectorAll(".water-btn")
-        .forEach((btn) => btn.classList.remove("selected"));
-      // Add 'selected' to the clicked one
-      target.classList.add("selected");
-      selectedWater = parseInt(target.dataset.oz);
-      updateMixButton();
-    }
-  });
+.modal-content h2 {
+    color: #0d47a1;
+    margin-bottom: 5px;
+}
 
-  // 2. Fragrance Selection
-  fragranceOptions.addEventListener("click", (e) => {
-    const target = e.target.closest(".fragrance-btn");
-    if (target) {
-      document
-        .querySelectorAll(".fragrance-btn")
-        .forEach((btn) => btn.classList.remove("selected"));
-      target.classList.add("selected");
-      selectedFragrance = target.dataset.scent;
-      updateMixButton();
-    }
-  });
+.modal-content p {
+    color: #3f51b5;
+    margin-bottom: 10px;
+}
 
-  // 3. Pellet Input
-  pelletsInput.addEventListener("input", (e) => {
-    selectedPellets = parseInt(e.target.value) || 0;
-  });
+.modal-content h3 {
+    color: #1976d2;
+    margin-top: 5px;
+    font-size: 1.2em;
+}
 
-  // 4. MIX & SHAKE Button Click
-  mixButton.addEventListener("click", () => {
-    if (!mixButton.disabled) {
-      gameScreen.classList.add("hidden");
-      mixingScreen.classList.remove("hidden");
+/* --- Selection Styles --- */
+.selection-box {
+    text-align: left;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f0f8ff; /* Very Light Blue */
+    border-left: 5px solid #64b5f6;
+    border-radius: 8px;
+}
 
-      // Simulate mixing time (3 seconds)
-      setTimeout(calculateResult, 3000);
-    }
-  });
+.selection-box h2 {
+    font-size: 1.2em;
+    color: #3f51b5;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
 
-  // 5. Try Another Recipe Button Click
-  resetButton.addEventListener("click", () => {
-    // Reset state and return to game screen
-    selectedWater = null;
-    selectedFragrance = null;
-    selectedPellets = 7;
+.options-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-around;
+}
 
-    document
-      .querySelectorAll(".btn.selected")
-      .forEach((btn) => btn.classList.remove("selected"));
-    pelletsInput.value = 7;
-    updateMixButton();
+.grid-options {
+    grid-template-columns: 1fr 1fr;
+}
 
-    resultScreen.classList.add("hidden");
-    gameScreen.classList.remove("hidden");
-  });
+/* Buttons */
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px; /* Fully rounded buttons */
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
 
-  // --- Core Game Logic ---
+.large-btn {
+    padding: 12px 30px;
+    font-size: 1.1em;
+}
 
-  const calculateQuality = () => {
-    let quality = 0;
-    let concentrationStatus = "";
+.water-btn, .tablet-btn, .fragrance-btn {
+    background-color: #e3f2fd; /* Lightest Blue */
+    color: #1976d2;
+    border: 2px solid #64b5f6;
+}
 
-    // Score based on Water
-    if (selectedWater === OPTIMAL_WATER_OZ) {
-      quality += 50;
-      concentrationStatus = "Perfect";
-    } else if (selectedWater < OPTIMAL_WATER_OZ) {
-      // 6 oz
-      quality += 20;
-      concentrationStatus = "Concentrated";
-    } else {
-      // 12 oz
-      quality += 30;
-      concentrationStatus = "Diluted";
-    }
+.water-btn.selected, .tablet-btn.selected, .fragrance-btn.selected {
+    background-color: #1976d2; /* Main Blue */
+    color: white;
+    border-color: #1976d2;
+    box-shadow: 0 4px 6px rgba(25, 118, 210, 0.3);
+}
 
-    // Score based on Pellets
-    if (
-      selectedPellets >= OPTIMAL_PELLET_MIN &&
-      selectedPellets <= OPTIMAL_PELLET_MAX
-    ) {
-      quality += 50;
-    } else if (selectedPellets < OPTIMAL_PELLET_MIN) {
-      quality += 20;
-    } else {
-      quality += 30;
-    }
+.primary-btn {
+    background-color: #0d47a1; /* Darker Blue */
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
 
-    return { quality, concentrationStatus };
-  };
+.secondary-btn {
+    background-color: #64b5f6; /* Medium Blue */
+    color: #0d47a1;
+    width: 100%;
+    margin-top: 15px;
+}
 
-  const calculateResult = () => {
-    const { quality, concentrationStatus } = calculateQuality();
+.btn:disabled {
+    background-color: #bdbdbd;
+    color: #757575;
+    cursor: not-allowed;
+    border-color: #9e9e9e;
+    box-shadow: none;
+}
 
-    // --- Bubble Test Logic ---
-    let bubbleResultText = "";
-    let finalMessage = "";
+/* --- Mixing Styles --- */
+#mixing-screen {
+    text-align: center;
+    padding: 50px 0;
+}
 
-    if (quality === TARGET_QUALITY) {
-      bubbleResultText =
-        "Massive, Long-lasting Bubble! (The recipe is perfect.)";
-      finalMessage = "🏆 GRAND SUCCESS! Your recipe is scientifically sound.";
-      document.getElementById("bubble-icon").style.color = "#4CAF50"; // Green Perfect
-    } else if (quality >= 70) {
-      bubbleResultText = "Nice, Stable Bubble! (Good for everyday use.)";
-      finalMessage = "👍 SUCCESS! A decent recipe, good for everyday use.";
-      document.getElementById("bubble-icon").style.color = "#FFC107"; // Amber Good
-    } else {
-      bubbleResultText =
-        "No Bubble or Weak Bubble. (The solution is too unbalanced.)";
-      finalMessage =
-        "👎 FAILURE. Try adjusting your water or pellet count next time.";
-      document.getElementById("bubble-icon").style.color = "#F44336"; // Red Failure
-    }
+.mixing-icon {
+    font-size: 6em;
+    color: #1976d2;
+    animation: spin 1s infinite linear;
+}
 
-    // --- Update Result Screen ---
-    document.getElementById(
-      "water-summary"
-    ).textContent = `${selectedWater} oz (${concentrationStatus})`;
-    document.getElementById(
-      "pellets-summary"
-    ).textContent = `${selectedPellets}`;
-    document.getElementById("fragrance-summary").textContent =
-      selectedFragrance;
-    document.getElementById("bubble-result-text").textContent =
-      bubbleResultText;
-    document.getElementById(
-      "final-score"
-    ).textContent = `Final Quality Score: ${quality} / ${TARGET_QUALITY}`;
-    document.getElementById("final-message").textContent = finalMessage;
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
 
-    mixingScreen.classList.add("hidden");
-    resultScreen.classList.remove("hidden");
-  };
+/* --- Result Styles --- */
+#result-screen {
+    text-align: center;
+}
 
-  // --- Initialization ---
-  renderFragranceButtons();
-});
+.result-display {
+    padding: 20px;
+    background: #e1f5fe;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.bubble-large {
+    font-size: 6em;
+    border-radius: 50%;
+    transition: all 0.5s;
+}
+
+.summary-box {
+    text-align: left;
+    padding: 15px;
+    border: 1px dashed #64b5f6;
+    background: #f0f8ff;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+#final-score {
+    font-size: 2.2em;
+    color: #0d47a1;
+}
