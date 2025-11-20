@@ -29,9 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Optimal Values 
     const OPTIMAL_WATER_OZ = 9;
-    
-    // 💥 เปลี่ยน Optimal Tablet เป็น 1 ตามที่ร้องขอ 💥
     const OPTIMAL_TABLET = 1; 
+    
+    // 💥 กลิ่นที่ให้ Perfect Score 💥
+    const OPTIMAL_FRAGRANCES = ['Lavender Eucalyptus', 'Iris Agave', 'Perrine Lemon'];
     
     const TARGET_QUALITY = 100;
 
@@ -171,14 +172,18 @@ document.addEventListener('DOMContentLoaded', () => {
             concentrationStatus = 'Diluted';
         }
 
-        // 2. Score based on Tablets (Max 50 points)
-        // 💥 1 Tablet คือ Perfect Score (50 คะแนน) 💥
+        // 2. Score based on Tablets/Fragrance (Max 50 points)
         if (selectedTablets === OPTIMAL_TABLET) { // 1 Tablet
-            quality += 50; 
+            // 💥 ตรวจสอบว่า 1 Tablet ถูกจับคู่กับกลิ่นที่ถูกต้องหรือไม่ 💥
+            if (OPTIMAL_FRAGRANCES.includes(selectedFragrance)) {
+                quality += 50; // Perfect score condition (1 Tablet + Optimal Scent)
+            } else {
+                quality += 40; // High score (1 Tablet but non-optimal scent)
+            }
         } else if (selectedTablets === 2 || selectedTablets === 3) { 
-            quality += 30; // 2 or 3 tablets gives a decent score
+            quality += 30; // Decent score for 2 or 3 tablets
         } else { // 4 Tablets (Too strong/foamy)
-            quality += 20; // 4 tablets gives a low score
+            quality += 20; // Low score for 4 tablets
         }
         
         return { quality, concentrationStatus };
