@@ -1,0 +1,152 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f7f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  color: #333;
+}
+
+.container {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+}
+
+header h1 {
+  color: #4caf50;
+  margin-top: 5px;
+  font-size: 1.8em;
+}
+
+header i {
+  font-size: 2em;
+  color: #4caf50;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* --- Selection Styles --- */
+.selection-box {
+  text-align: left;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #eef;
+  border-radius: 8px;
+}
+
+.selection-box h2 {
+  font-size: 1.1em;
+  color: #3f51b5;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.options-group {
+  display: flex;
+  gap: 10px;
+}
+
+.grid-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.water-btn,
+.fragrance-btn {
+  background-color: #d1e7dd;
+  color: #0c6e40;
+  border: 1px solid #0c6e40;
+}
+
+.water-btn.selected,
+.fragrance-btn.selected {
+  background-color: #4caf50;
+  color: white;
+  border-color: #388e3c;
+}
+
+.primary-btn {
+  background-color: #3f51b5;
+  color: white;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.primary-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Input */
+#pellets-input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 1em;
+}
+
+/* --- Mixing Styles --- */
+#mixing-screen {
+  text-align: center;
+  padding: 50px 0;
+}
+
+.mixing-icon {
+  font-size: 4em;
+  color: #3f51b5;
+}
+
+/* --- Result Styles --- */
+#result-screen {
+  text-align: center;
+}
+
+.result-display {
+  padding: 20px;
+  background: #e1f5fe;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.bubble-large {
+  font-size: 5em;
+  color: #bbdefb; /* Light blue bubble */
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(0, 0, 255, 0.3);
+}
+
+.summary-box {
+  text-align: left;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+#final-score {
+  font-size: 2em;
+  color: #e91e63;
+}

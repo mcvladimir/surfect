@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Soap Bubble Lab Simulator</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="game-screen">
+        <header>
+          <i class="fas fa-soap"></i>
+          <h1>Soap Bubble Lab</h1>
+        </header>
+
+        <section class="selection-box">
+          <h2>💧 Step 1: Add Water (oz)</h2>
+          <div id="water-options" class="options-group">
+            <button data-oz="6" class="water-btn">6 oz (Concentrated)</button>
+            <button data-oz="9" class="water-btn">9 oz (Perfect)</button>
+            <button data-oz="12" class="water-btn">12 oz (Diluted)</button>
+          </div>
+        </section>
+
+        <section class="selection-box">
+          <h2>🌸 Step 2: Choose Fragrance</h2>
+          <div id="fragrance-options" class="options-group grid-options"></div>
+        </section>
+
+        <section class="selection-box">
+          <h2>🧼 Step 3: Add Shampoo Pellets</h2>
+          <input
+            type="number"
+            id="pellets-input"
+            min="1"
+            max="15"
+            value="7"
+            placeholder="e.g., 7"
+          />
+        </section>
+
+        <button id="mix-button" class="btn primary-btn" disabled>
+          MIX & SHAKE!
+        </button>
+      </div>
+
+      <div id="mixing-screen" class="hidden">
+        <i class="fas fa-hand-rock fa-spin mixing-icon"></i>
+        <h2>⏳ Mixing in progress...</h2>
+        <p>Please wait while the surfactants activate.</p>
+      </div>
+
+      <div id="result-screen" class="hidden">
+        <header>
+          <i class="fas fa-vial"></i>
+          <h1>Bubble Creation Summary</h1>
+        </header>
+
+        <div class="result-display">
+          <i id="bubble-icon" class="fas fa-circle bubble-large"></i>
+          <p id="bubble-result-text"></p>
+        </div>
+
+        <div class="summary-box">
+          <h3>Recipe Used:</h3>
+          <p><strong>Water:</strong> <span id="water-summary"></span></p>
+          <p><strong>Pellets:</strong> <span id="pellets-summary"></span></p>
+          <p><strong>Scent:</strong> <span id="fragrance-summary"></span></p>
+        </div>
+
+        <h2 id="final-score"></h2>
+        <p id="final-message"></p>
+
+        <button id="reset-button" class="btn primary-btn">
+          Try Another Recipe
+        </button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
