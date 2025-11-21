@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const OPTIMAL_WATER_OZ = 9;
     const OPTIMAL_TABLET = 1; 
     
-    // 💥 กลิ่นที่ให้ Perfect Score: 9 Oz + 1 Tablet + (Lavender Eucalyptus, Iris Agave, หรือ Perrine Lemon) จะได้ 100 คะแนนเต็ม 💥
+    // กลิ่นที่ให้ Perfect Score: 9 Oz + 1 Tablet + (Lavender Eucalyptus, Iris Agave, หรือ Perrine Lemon) จะได้ 100 คะแนนเต็ม 
     const OPTIMAL_FRAGRANCES = ['Lavender Eucalyptus', 'Iris Agave', 'Perrine Lemon'];
     
     const TARGET_QUALITY = 100;
@@ -72,8 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
         button.disabled = selectionState === null;
     };
 
-    // 💥 New: Bubble Animation Functions 💥
-    let bubbleInterval; // To store the interval ID for clearing
+    // Bubble Animation Functions
+    let bubbleInterval; 
 
     const createBubbles = () => {
         const bubbleContainer = document.createElement('div');
@@ -172,11 +172,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!mixButton.disabled) {
             gameScreen.classList.add('hidden');
             mixingScreen.classList.remove('hidden');
-            createBubbles(); // 💥 เริ่มแอนิเมชันฟองสบู่ 💥
+            createBubbles(); // เริ่มแอนิเมชันฟองสบู่
 
             // Simulate mixing time (3 seconds)
             setTimeout(() => {
-                stopBubbles(); // 💥 หยุดแอนิเมชันฟองสบู่ 💥
+                stopBubbles(); // หยุดแอนิเมชันฟองสบู่
                 calculateResult();
             }, 3000);
         }
@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 2. Score based on Tablets/Fragrance (Max 50 points)
         if (selectedTablets === OPTIMAL_TABLET) { // 1 Tablet (Optimal)
-            // 💥 Perfect Score Condition 💥: 1 Tablet + Optimal Scent
+            // Perfect Score Condition: 1 Tablet + Optimal Scent
             if (OPTIMAL_FRAGRANCES.includes(selectedFragrance)) {
                 quality += 50; // Perfect score (1 Tablet + Correct Scent)
             } else {
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (selectedTablets === 2 || selectedTablets === 3) { 
             quality += 30; // Decent score for 2 or 3 tablets (Slightly too concentrated)
         } else { 
-            // 💥 4, 5, 6 Tablets (Too strong/foamy) 💥
+            // 4, 5, 6 Tablets (Too strong/foamy)
             quality += 20; // Low score for 4, 5, or 6 tablets (Far too concentrated/wasteful)
         }
         
