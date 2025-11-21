@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const OPTIMAL_WATER_OZ = 9;
     const OPTIMAL_TABLET = 1; 
     
-    // กลิ่นที่ให้ Perfect Score: 9 Oz + 1 Tablet + (Lavender Eucalyptus, Iris Agave, หรือ Perrine Lemon) จะได้ 100 คะแนนเต็ม 
+    // กลิ่นที่ให้ Perfect Score
     const OPTIMAL_FRAGRANCES = ['Lavender Eucalyptus', 'Iris Agave', 'Perrine Lemon'];
     
     const TARGET_QUALITY = 100;
@@ -53,7 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = document.createElement('button');
             button.className = 'btn fragrance-btn';
             button.dataset.scent = scent;
-            button.innerHTML = `<i class="fas fa-droplet" style="color:${color};"></i> ${scent}`;
+            // ใช้ไอคอนหยดน้ำขนาดเล็กในปุ่มเลือกกลิ่น
+            button.innerHTML = `<i class="fas fa-droplet" style="color:${color};"></i> ${scent}`; 
             fragranceOptions.appendChild(button);
         }
     };
