@@ -1,59 +1,65 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Helper function for getting elements by ID safely
+    const getElement = (id) => document.getElementById(id);
+
     // --- DOM Elements ---
-    const welcomeModal = document.getElementById('welcome-modal');
-    const startButton = document.getElementById('start-button');
-    const gameScreen = document.getElementById('game-screen');
-    const mixingScreen = document.getElementById('mixing-screen');
-    const resultScreen = document.getElementById('result-screen');
+    const welcomeModal = getElement('welcome-modal');
+    const startButton = getElement('start-button');
+    const gameScreen = getElement('game-screen');
+    const mixingScreen = getElement('mixing-screen');
+    const resultScreen = getElement('result-screen');
     
-    // Step Elements
-    const step1 = document.getElementById('step-1');
-    const step2 = document.getElementById('step-2');
-    const step3 = document.getElementById('step-3');
+    // Step Containers
+    const step1 = getElement('step-1');
+    const step2 = getElement('step-2');
+    const step3 = getElement('step-3');
     
     // Step Buttons
-    const step1NextButton = document.getElementById('step-1-next');
-    const step2NextButton = document.getElementById('step-2-next');
-    const mixButton = document.getElementById('mix-button');
-    const resetButton = document.getElementById('reset-button');
+    const step1NextButton = getElement('step-1-next');
+    const step2NextButton = getElement('step-2-next');
+    const mixButton = getElement('mix-button');
+    const resetButton = getElement('reset-button');
     
-    // Input Elements
-    const waterOptions = document.getElementById('water-options');
-    const fragranceOptions = document.getElementById('fragrance-options');
-    const tabletOptions = document.getElementById('tablet-options');
+    // Input Containers
+    const waterOptions = getElement('water-options');
+    const fragranceOptions = getElement('fragrance-options');
+    const tabletOptions = getElement('tablet-options');
 
-    // --- Game State ---
+    // Fail-safe initialization check (prevent crashing if core elements are missing)
+    if (!welcomeModal || !gameScreen || !fragranceOptions) {
+        console.error("Critical DOM elements not found. Application cannot start.");
+        return; 
+    }
+
+    // --- Game State & Constants ---
     let selectedWater = null;
     let selectedFragrance = null;
     let selectedTablets = null;
+    let bubbleInterval = null;
     
-    // Optimal Values 
     const OPTIMAL_WATER_OZ = 9;
     const OPTIMAL_TABLET = 1; 
-    
-    // กลิ่นที่ให้ Perfect Score
     const OPTIMAL_FRAGRANCES = ['Lavender Eucalyptus', 'Iris Agave', 'Perrine Lemon'];
-    
     const TARGET_QUALITY = 100;
 
     const FRAGRANCES = {
-        'Iris Agave': '#8e24aa', // Purple
-        'Perrine Lemon': '#ffeb3b', // Yellow
-        'Lavender Eucalyptus': '#7e57c2', // Violet
-        'Pacific Mist': '#03a9f4', // Light Blue
-        'Cedar Fig': '#795548', // Brown
-        'Fragrance-free': '#9e9e9e' // Grey
+        'Iris Agave': '#8e24aa', 
+        'Perrine Lemon': '#ffeb3b', 
+        'Lavender Eucalyptus': '#7e57c2', 
+        'Pacific Mist': '#03a9f4', 
+        'Cedar Fig': '#795548', 
+        'Fragrance-free': '#9e9e9e' 
     };
     
     // --- Helper Functions ---
 
     // Function to render fragrance buttons
     const renderFragranceButtons = () => {
+        // Safe to use fragranceOptions here due to initial check
         for (const [scent, color] of Object.entries(FRAGRANCES)) {
             const button = document.createElement('button');
             button.className = 'btn fragrance-btn';
             button.dataset.scent = scent;
-            // ใช้ไอคอนหยดน้ำขนาดเล็กในปุ่มเลือกกลิ่น
             button.innerHTML = `<i class="fas fa-droplet" style="color:${color};"></i> ${scent}`; 
             fragranceOptions.appendChild(button);
         }
@@ -70,139 +76,158 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to update 'Enter' button status
     const updateNavigationButton = (button, selectionState) => {
-        button.disabled = selectionState === null;
+        if (button) { 
+            button.disabled = selectionState === null;
+        }
     };
 
-    // Bubble Animation Functions
-    let bubbleInterval; 
-
+    // Bubble Animation Functions (Made more defensive against rapid clicks/state issues)
     const createBubbles = () => {
-        const bubbleContainer = document.createElement('div');
-        bubbleContainer.className = 'bubble-container';
-        mixingScreen.appendChild(bubbleContainer);
+        let bubbleContainer = mixingScreen.querySelector('.bubble-container');
+        if (!bubbleContainer) {
+            bubbleContainer = document.createElement('div');
+            bubbleContainer.className = 'bubble-container';
+            mixingScreen.appendChild(bubbleContainer);
+        }
+
+        if (bubbleInterval) {
+            clearInterval(bubbleInterval);
+        }
 
         let bubbleCount = 0;
         bubbleInterval = setInterval(() => {
-            if (bubbleCount >= 20) { // Limit number of bubbles for performance
+            if (bubbleCount >= 20) { 
                 clearInterval(bubbleInterval);
                 return;
             }
             const bubble = document.createElement('div');
             bubble.className = 'bubble';
-            const size = Math.random() * 30 + 20; // Size between 20px and 50px
-            const left = Math.random() * 90; // Position from 0% to 90%
-            const animationDuration = Math.random() * 3 + 2; // Duration 2s to 5s
+            const size = Math.random() * 30 + 20; 
+            const left = Math.random() * 90; 
+            const animationDuration = Math.random() * 3 + 2; 
 
             bubble.style.width = `${size}px`;
             bubble.style.height = `${size}px`;
             bubble.style.left = `${left}%`;
             bubble.style.animationDuration = `${animationDuration}s`;
-            bubble.style.animationDelay = `${Math.random() * 1}s`; // Stagger start times
+            bubble.style.animationDelay = `${Math.random() * 1}s`; 
 
             bubbleContainer.appendChild(bubble);
             bubbleCount++;
 
-            // Remove bubble after animation to prevent DOM clutter
             bubble.addEventListener('animationend', () => {
                 bubble.remove();
             });
 
-        }, 200); // Create a new bubble every 200ms
+        }, 200); 
     };
 
     const stopBubbles = () => {
-        clearInterval(bubbleInterval);
+        if (bubbleInterval) {
+            clearInterval(bubbleInterval);
+            bubbleInterval = null;
+        }
         const bubbleContainer = mixingScreen.querySelector('.bubble-container');
         if (bubbleContainer) {
-            bubbleContainer.remove(); // Remove all bubbles
+            bubbleContainer.remove(); 
         }
     };
 
     // --- Event Listeners ---
 
     // 0. Modal Start Button
-    startButton.addEventListener('click', () => {
-        welcomeModal.classList.add('hidden');
-        gameScreen.classList.remove('hidden');
-    });
+    if (startButton) {
+        startButton.addEventListener('click', () => {
+            welcomeModal.classList.add('hidden');
+            gameScreen.classList.remove('hidden');
+        });
+    }
 
     // 1. Water Selection
-    waterOptions.addEventListener('click', (e) => {
-        const target = e.target.closest('.water-btn');
-        if (target) {
-            selectedWater = parseInt(target.dataset.oz);
-            selectButton('water-options', 'water-btn', 'oz', selectedWater);
-            updateNavigationButton(step1NextButton, selectedWater);
-        }
-    });
-
-    // Step 1 Next (Enter)
-    step1NextButton.addEventListener('click', () => {
-        step1.classList.add('hidden');
-        step2.classList.remove('hidden');
-    });
+    if (waterOptions && step1NextButton) {
+        waterOptions.addEventListener('click', (e) => {
+            const target = e.target.closest('.water-btn');
+            if (target) {
+                selectedWater = parseInt(target.dataset.oz);
+                selectButton('water-options', 'water-btn', 'oz', selectedWater);
+                updateNavigationButton(step1NextButton, selectedWater);
+            }
+        });
+        // Step 1 Next (Enter)
+        step1NextButton.addEventListener('click', () => {
+            step1?.classList.add('hidden'); // Using optional chaining for safety
+            step2?.classList.remove('hidden');
+        });
+    }
 
     // 2. Fragrance Selection
-    fragranceOptions.addEventListener('click', (e) => {
-        const target = e.target.closest('.fragrance-btn');
-        if (target) {
-            selectedFragrance = target.dataset.scent;
-            selectButton('fragrance-options', 'fragrance-btn', 'scent', selectedFragrance);
-            updateNavigationButton(step2NextButton, selectedFragrance);
-        }
-    });
+    if (fragranceOptions && step2NextButton) {
+        fragranceOptions.addEventListener('click', (e) => {
+            const target = e.target.closest('.fragrance-btn');
+            if (target) {
+                selectedFragrance = target.dataset.scent;
+                selectButton('fragrance-options', 'fragrance-btn', 'scent', selectedFragrance);
+                updateNavigationButton(step2NextButton, selectedFragrance);
+            }
+        });
+        // Step 2 Next (Enter)
+        step2NextButton.addEventListener('click', () => {
+            step2?.classList.add('hidden');
+            step3?.classList.remove('hidden');
+        });
+    }
 
-    // Step 2 Next (Enter)
-    step2NextButton.addEventListener('click', () => {
-        step2.classList.add('hidden');
-        step3.classList.remove('hidden');
-    });
 
     // 3. Tablet Selection
-    tabletOptions.addEventListener('click', (e) => {
-        const target = e.target.closest('.tablet-btn');
-        if (target) {
-            selectedTablets = parseInt(target.dataset.tablets);
-            selectButton('tablet-options', 'tablet-btn', 'tablets', selectedTablets);
-            updateNavigationButton(mixButton, selectedTablets);
-        }
-    });
+    if (tabletOptions && mixButton) {
+        tabletOptions.addEventListener('click', (e) => {
+            const target = e.target.closest('.tablet-btn');
+            if (target) {
+                selectedTablets = parseInt(target.dataset.tablets);
+                selectButton('tablet-options', 'tablet-btn', 'tablets', selectedTablets);
+                updateNavigationButton(mixButton, selectedTablets);
+            }
+        });
+    }
 
     // 4. MIX & SHAKE Button Click
-    mixButton.addEventListener('click', () => {
-        if (!mixButton.disabled) {
-            gameScreen.classList.add('hidden');
-            mixingScreen.classList.remove('hidden');
-            createBubbles(); // เริ่มแอนิเมชันฟองสบู่
+    if (mixButton) {
+        mixButton.addEventListener('click', () => {
+            if (!mixButton.disabled) {
+                gameScreen?.classList.add('hidden');
+                mixingScreen?.classList.remove('hidden');
+                createBubbles(); 
 
-            // Simulate mixing time (3 seconds)
-            setTimeout(() => {
-                stopBubbles(); // หยุดแอนิเมชันฟองสบู่
-                calculateResult();
-            }, 3000);
-        }
-    });
+                setTimeout(() => {
+                    stopBubbles(); 
+                    calculateResult();
+                }, 3000);
+            }
+        });
+    }
 
     // 5. Try Another Recipe Button Click (Reset)
-    resetButton.addEventListener('click', () => {
-        // Reset state
-        selectedWater = null;
-        selectedFragrance = null;
-        selectedTablets = null;
-        
-        // Reset UI
-        document.querySelectorAll('.btn.selected').forEach(btn => btn.classList.remove('selected'));
-        updateNavigationButton(step1NextButton, selectedWater);
-        updateNavigationButton(step2NextButton, selectedFragrance);
-        updateNavigationButton(mixButton, selectedTablets);
+    if (resetButton) {
+        resetButton.addEventListener('click', () => {
+            // Reset state
+            selectedWater = null;
+            selectedFragrance = null;
+            selectedTablets = null;
+            
+            // Reset UI
+            document.querySelectorAll('.btn.selected').forEach(btn => btn.classList.remove('selected'));
+            updateNavigationButton(step1NextButton, selectedWater);
+            updateNavigationButton(step2NextButton, selectedFragrance);
+            updateNavigationButton(mixButton, selectedTablets);
 
-        // Reset step view
-        resultScreen.classList.add('hidden');
-        step2.classList.add('hidden');
-        step3.classList.add('hidden');
-        gameScreen.classList.remove('hidden');
-        step1.classList.remove('hidden');
-    });
+            // Reset step view
+            resultScreen?.classList.add('hidden');
+            step2?.classList.add('hidden');
+            step3?.classList.add('hidden');
+            gameScreen?.classList.remove('hidden');
+            step1?.classList.remove('hidden');
+        });
+    }
 
     // --- Core Game Logic ---
 
@@ -214,27 +239,25 @@ document.addEventListener('DOMContentLoaded', () => {
         if (selectedWater === OPTIMAL_WATER_OZ) { // 9 Oz
             quality += 50;
             concentrationStatus = 'Perfect';
-        } else if (selectedWater < OPTIMAL_WATER_OZ) { // 6 oz (Concentrated - Too much soap relative to water)
+        } else if (selectedWater < OPTIMAL_WATER_OZ) { // 6 oz
             quality += 20;
             concentrationStatus = 'Concentrated';
-        } else { // 12 oz (Diluted - Too much water relative to soap)
+        } else { // 12 oz
             quality += 30;
             concentrationStatus = 'Diluted';
         }
 
         // 2. Score based on Tablets/Fragrance (Max 50 points)
         if (selectedTablets === OPTIMAL_TABLET) { // 1 Tablet (Optimal)
-            // Perfect Score Condition: 1 Tablet + Optimal Scent
             if (OPTIMAL_FRAGRANCES.includes(selectedFragrance)) {
-                quality += 50; // Perfect score (1 Tablet + Correct Scent)
+                quality += 50; // Perfect score
             } else {
-                quality += 40; // High score (1 Tablet but non-optimal scent)
+                quality += 40; // High score
             }
         } else if (selectedTablets === 2 || selectedTablets === 3) { 
-            quality += 30; // Decent score for 2 or 3 tablets (Slightly too concentrated)
+            quality += 30; // Decent score
         } else { 
-            // 4, 5, 6 Tablets (Too strong/foamy)
-            quality += 20; // Low score for 4, 5, or 6 tablets (Far too concentrated/wasteful)
+            quality += 20; // Low score
         }
         
         return { quality, concentrationStatus };
@@ -263,19 +286,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- Update Result Screen ---
-        document.getElementById('water-summary').textContent = `${selectedWater} oz (${concentrationStatus})`;
-        document.getElementById('tablets-summary').textContent = `${selectedTablets} Tablet(s)`;
-        document.getElementById('fragrance-summary').textContent = selectedFragrance;
-        document.getElementById('bubble-result-text').textContent = bubbleResultText;
-        document.getElementById('final-score').textContent = `Final Quality Score: ${quality} / ${TARGET_QUALITY}`;
-        document.getElementById('final-message').textContent = finalMessage;
+        const waterSummary = getElement('water-summary');
+        const tabletsSummary = getElement('tablets-summary');
+        const fragranceSummary = getElement('fragrance-summary');
+        const bubbleResultTextEl = getElement('bubble-result-text');
+        const finalScoreEl = getElement('final-score');
+        const finalMessageEl = getElement('final-message');
+        const bubbleIcon = getElement('bubble-icon');
+
+        if (waterSummary) waterSummary.textContent = `${selectedWater} oz (${concentrationStatus})`;
+        if (tabletsSummary) tabletsSummary.textContent = `${selectedTablets} Tablet(s)`;
+        if (fragranceSummary) fragranceSummary.textContent = selectedFragrance;
+        if (bubbleResultTextEl) bubbleResultTextEl.textContent = bubbleResultText;
+        if (finalScoreEl) finalScoreEl.textContent = `Final Quality Score: ${quality} / ${TARGET_QUALITY}`;
+        if (finalMessageEl) finalMessageEl.textContent = finalMessage;
         
         // Apply color to the bubble icon
-        document.getElementById('bubble-icon').style.color = bubbleColor; 
-        document.getElementById('bubble-icon').style.boxShadow = `0 0 15px ${bubbleColor}`;
+        if (bubbleIcon) {
+            bubbleIcon.style.color = bubbleColor; 
+            bubbleIcon.style.boxShadow = `0 0 15px ${bubbleColor}`;
+        }
         
-        mixingScreen.classList.add('hidden');
-        resultScreen.classList.remove('hidden');
+        mixingScreen?.classList.add('hidden');
+        resultScreen?.classList.remove('hidden');
     };
 
     // --- Initialization ---
