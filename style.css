@@ -3,13 +3,13 @@
 /* ---------------------------------- */
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #ffffff; /* 💥 พื้นหลังหลังสุดเป็นสีขาว 💥 */
+    background-color: #001f3f; /* 💥 เปลี่ยนเป็นสีน้ำเงินเข้มตามธีม 💥 */
     display: flex;
     justify-content: center;
     align-items: flex-start; 
     min-height: 100vh;
     margin: 0;
-    color: #000a12; /* Default text color on white body */
+    color: #ffffff; /* เปลี่ยนเป็นสีขาวเพื่อให้เข้ากับพื้นหลังสีเข้ม */
     padding-top: 20px; 
     padding-bottom: 20px; 
 }
@@ -63,7 +63,7 @@ header i {
 
 
 /* ---------------------------------- */
-/* MODAL STYLES (Using white body background, but blue content) */
+/* MODAL STYLES (Using dark blue body background) */
 /* ---------------------------------- */
 .modal {
     position: fixed;
@@ -71,7 +71,7 @@ header i {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #ffffff; /* 💥 Modal background เป็นสีขาวตาม body 💥 */
+    background: rgba(0, 31, 63, 0.9); /* 💥 Modal background ใช้สีน้ำเงินเข้มที่ทึบแสง 💥 */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -187,23 +187,27 @@ header i {
     overflow: hidden; /* Ensure bubbles don't overflow the container */
 }
 
-/* สไตล์สำหรับ Icon Mixing ใหม่ */
+/* สไตล์สำหรับ Icon Mixing ใหม่ (Vial) */
 .mixing-icon {
-    font-size: 6em; /* ใช้ font-size แทน width/height สำหรับ Icon */
+    font-size: 6em; 
     color: #ffffff; 
     opacity: 0.9;
     /* ใช้ filter เพื่อให้สีดูเข้ากับธีมน้ำเงินมากขึ้น */
     filter: drop-shadow(0 0 10px #90caf9); 
-    animation: pulse-mix 2s infinite alternate; 
+    animation: shake-mix 0.15s infinite alternate; /* 💥 เปลี่ยนเป็นแอนิเมชันเขย่าเร็ว 💥 */
     position: relative;
     z-index: 2; 
-    display: block; /* ทำให้เป็นบล็อกเพื่อจัดกึ่งกลางและมีผลกับ transform */
+    display: block; 
     margin: 0 auto;
 }
 
-@keyframes pulse-mix {
-    from { transform: scale(1) rotate(0deg); opacity: 0.9; }
-    to { transform: scale(1.05) rotate(5deg); opacity: 1; }
+/* Keyframes สำหรับการเขย่า (Shaking) */
+@keyframes shake-mix {
+    0% { transform: translate(1px, 1px) rotate(0deg) scale(1); }
+    25% { transform: translate(-1px, -1px) rotate(-1deg) scale(1.02); }
+    50% { transform: translate(1px, -2px) rotate(1deg) scale(1.04); }
+    75% { transform: translate(-2px, 1px) rotate(-1deg) scale(1.02); }
+    100% { transform: translate(2px, 0px) rotate(0deg) scale(1); }
 }
 
 /* Bubble Animation Styles */
