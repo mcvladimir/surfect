@@ -13,8 +13,8 @@
     <!-- WELCOME POP-UP -->
     <div id="welcome-modal" class="modal">
         <div class="modal-content">
-            <!-- ไอคอนหยดน้ำ -->
-            <i class="fas fa-tint welcome-icon"></i> 
+            <!-- ไอคอนต้อนรับ - ใช้ไอคอนเดิม (ถ้ามี) หรือไอคอนทั่วไป -->
+            <i class="fas fa-hand-sparkles welcome-icon"></i> 
             <h2>Welcome to BLUELAND.</h2>
             <p>Are you ready to save the world with us?</p>
             <h3>Let's make bubbles together!</h3>
@@ -27,8 +27,8 @@
         <!-- Game Screen Container (Holds all steps) -->
         <div id="game-screen" class="hidden">
             <header>
-                <!-- ไอคอนหยดน้ำ -->
-                <i class="fas fa-tint"></i> 
+                <!-- ไอคอน Header - ใช้ไอคอนที่ดูเป็นห้องแล็บ -->
+                <i class="fas fa-flask"></i> 
                 <h1>BLUELAND<br><span>BUBBLE LAB</span></h1> 
             </header>
 
@@ -77,10 +77,11 @@
         <!-- Mixing Screen (Hidden initially) -->
         <div id="mixing-screen" class="hidden">
             <header>
-                <i class="fas fa-tint"></i>
+                <i class="fas fa-flask"></i>
                 <h1>BLUELAND<br><span>BUBBLE LAB</span></h1>
             </header>
-            <i class="fas fa-tint mixing-icon"></i> 
+            <!-- 💥 ไอคอนแสดงการผสมสาร 💥 -->
+            <i class="fas fa-flask-vial mixing-icon"></i> 
             <h2 style="color: #ffffff; font-size: 1.5em; margin-top: 30px;">Mixing in progress...</h2>
             <p style="color: #bbdefb; margin-top: 10px;">Please wait while the tablets dissolve and surfactants activate.</p>
         </div>
@@ -88,12 +89,13 @@
         <!-- Result Screen (Hidden initially) -->
         <div id="result-screen" class="hidden">
             <header>
-                <i class="fas fa-tint"></i>
+                <i class="fas fa-flask"></i>
                 <h1>BLUELAND<br><span>BUBBLE LAB</span></h1>
             </header>
 
             <div class="result-display">
-                <i id="bubble-icon" class="fas fa-circle bubble-large"></i>
+                <!-- ไอคอนผลลัพธ์: ยังคงเป็นฟองสบู่ (วงกลม) แต่ใช้ไอคอน lab result -->
+                <i id="bubble-icon" class="fas fa-vial-circle-check bubble-large"></i>
                 <p id="bubble-result-text"></p>
             </div>
 
