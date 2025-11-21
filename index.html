@@ -13,8 +13,8 @@
     <!-- WELCOME POP-UP -->
     <div id="welcome-modal" class="modal">
         <div class="modal-content">
-            <!-- 💥 ไอคอนสบู่ 💥 -->
-            <i class="fas fa-soap welcome-icon"></i> 
+            <!-- 💥 เปลี่ยนเป็นไอคอนหยดน้ำ 💥 -->
+            <i class="fas fa-tint welcome-icon"></i> 
             <h2>Welcome to BLUELAND.</h2>
             <p>Are you ready to save the world with us?</p>
             <h3>Let's make bubbles together!</h3>
@@ -27,12 +27,12 @@
         <!-- Game Screen Container (Holds all steps) -->
         <div id="game-screen" class="hidden">
             <header>
-                <i class="fas fa-soap"></i> 
-                <!-- Header 2 บรรทัด -->
+                <!-- 💥 เปลี่ยนเป็นไอคอนหยดน้ำ 💥 -->
+                <i class="fas fa-tint"></i> 
                 <h1>BLUELAND<br><span>BUBBLE LAB</span></h1> 
             </header>
 
-            <!-- 1. Water Selection (Visible at start) -->
+            <!-- 1. Water Selection -->
             <div id="step-1" class="game-step">
                 <section class="selection-box">
                     <h2>💧 Step 1: Add Water (Oz)</h2>
@@ -45,7 +45,7 @@
                 <button id="step-1-next" class="btn secondary-btn" disabled>Enter</button>
             </div>
 
-            <!-- 2. Fragrance Selection (Hidden initially) -->
+            <!-- 2. Fragrance Selection -->
             <div id="step-2" class="game-step hidden">
                 <section class="selection-box">
                     <h2>🌸 Step 2: Choose Fragrance</h2>
@@ -56,7 +56,7 @@
                 <button id="step-2-next" class="btn secondary-btn" disabled>Enter</button>
             </div>
 
-            <!-- 3. Tablet Count (Hidden initially) -->
+            <!-- 3. Tablet Count -->
             <div id="step-3" class="game-step hidden">
                 <section class="selection-box">
                     <h2>🧼 Step 3: Add Soap Tablets</h2>
@@ -77,25 +77,23 @@
         <!-- Mixing Screen (Hidden initially) -->
         <div id="mixing-screen" class="hidden">
             <header>
-                <i class="fas fa-soap"></i>
-                <!-- Header 2 บรรทัด -->
+                <i class="fas fa-tint"></i>
                 <h1>BLUELAND<br><span>BUBBLE LAB</span></h1>
             </header>
-            <i class="fas fa-water fa-spin mixing-icon"></i>
-            <h2>⏳ Mixing in progress...</h2>
-            <p>Please wait while the tablets dissolve and surfactants activate.</p>
+            <!-- 💥 ไอคอนหยดน้ำขนาดใหญ่ตรงกลาง 💥 -->
+            <i class="fas fa-tint mixing-icon"></i> 
+            <h2 style="color: #ffffff; font-size: 1.5em; margin-top: 30px;">Mixing in progress...</h2>
+            <p style="color: #bbdefb; margin-top: 10px;">Please wait while the tablets dissolve and surfactants activate.</p>
         </div>
 
         <!-- Result Screen (Hidden initially) -->
         <div id="result-screen" class="hidden">
             <header>
-                <i class="fas fa-vial"></i>
-                <!-- Header 2 บรรทัด -->
+                <i class="fas fa-tint"></i>
                 <h1>BLUELAND<br><span>BUBBLE LAB</span></h1>
             </header>
 
             <div class="result-display">
-                <!-- ไอคอนฟองสบู่ -->
                 <i id="bubble-icon" class="fas fa-circle bubble-large"></i>
                 <p id="bubble-result-text"></p>
             </div>
