@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = document.createElement('button');
             button.className = 'btn fragrance-btn';
             button.dataset.scent = scent;
+            // ไอคอนหยดน้ำขนาดเล็กในปุ่มเลือกกลิ่น
             button.innerHTML = `<i class="fas fa-droplet" style="color:${color};"></i> ${scent}`; 
             fragranceOptions.appendChild(button);
         }
