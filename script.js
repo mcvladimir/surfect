@@ -55,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to render fragrance buttons
     const renderFragranceButtons = () => {
-        // Safe to use fragranceOptions here due to initial check
         for (const [scent, color] of Object.entries(FRAGRANCES)) {
             const button = document.createElement('button');
             button.className = 'btn fragrance-btn';
@@ -82,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Bubble Animation Functions (Made more defensive against rapid clicks/state issues)
+    // Bubble Animation Functions (Updated for full-screen mixing effect)
     const createBubbles = () => {
         let bubbleContainer = mixingScreen.querySelector('.bubble-container');
         if (!bubbleContainer) {
@@ -97,30 +96,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let bubbleCount = 0;
         bubbleInterval = setInterval(() => {
-            if (bubbleCount >= 20) { 
-                clearInterval(bubbleInterval);
-                return;
-            }
+            // สร้างฟองสบู่ได้ไม่จำกัดจำนวนจนกว่าจะหยุด
             const bubble = document.createElement('div');
             bubble.className = 'bubble';
-            const size = Math.random() * 30 + 20; 
-            const left = Math.random() * 90; 
-            const animationDuration = Math.random() * 3 + 2; 
+            const size = Math.random() * 40 + 20; // เพิ่มขนาดสูงสุด
+            const left = Math.random() * 100; // ครอบคลุมความกว้าง 100%
+            const animationDuration = Math.random() * 4 + 3; // เพิ่มระยะเวลาให้ลอยช้าลง
 
             bubble.style.width = `${size}px`;
             bubble.style.height = `${size}px`;
             bubble.style.left = `${left}%`;
             bubble.style.animationDuration = `${animationDuration}s`;
-            bubble.style.animationDelay = `${Math.random() * 1}s`; 
+            bubble.style.animationDelay = `${Math.random() * 2}s`; // เพิ่มความหลากหลายในการเริ่ม
 
             bubbleContainer.appendChild(bubble);
             bubbleCount++;
 
+            // กำจัดฟองสบู่เก่าเพื่อไม่ให้ DOM บวม
             bubble.addEventListener('animationend', () => {
                 bubble.remove();
             });
 
-        }, 200); 
+        }, 100); // สร้างฟองสบู่อย่างรวดเร็ว
     };
 
     const stopBubbles = () => {
@@ -129,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
             bubbleInterval = null;
         }
         const bubbleContainer = mixingScreen.querySelector('.bubble-container');
+        // ลบ container ออกเมื่อจบ
         if (bubbleContainer) {
             bubbleContainer.remove(); 
         }
