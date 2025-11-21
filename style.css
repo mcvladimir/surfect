@@ -187,16 +187,18 @@ header i {
     overflow: hidden; /* Ensure bubbles don't overflow the container */
 }
 
-/* สไตล์สำหรับรูปภาพ Mixing ที่ผู้ใช้อัปโหลดมา */
+/* สไตล์สำหรับ Icon Mixing ใหม่ */
 .mixing-icon {
-    width: 120px; /* กำหนดขนาดของรูปภาพ */
-    height: auto;
+    font-size: 6em; /* ใช้ font-size แทน width/height สำหรับ Icon */
+    color: #ffffff; 
     opacity: 0.9;
     /* ใช้ filter เพื่อให้สีดูเข้ากับธีมน้ำเงินมากขึ้น */
     filter: drop-shadow(0 0 10px #90caf9); 
     animation: pulse-mix 2s infinite alternate; 
     position: relative;
     z-index: 2; 
+    display: block; /* ทำให้เป็นบล็อกเพื่อจัดกึ่งกลางและมีผลกับ transform */
+    margin: 0 auto;
 }
 
 @keyframes pulse-mix {
