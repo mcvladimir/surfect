@@ -3,11 +3,14 @@ body {
     background-color: #e3f2fd; /* Light Blue Background */
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* 💥 แก้ไขให้รองรับการ Scroll บนมือถือ 💥 */
+    align-items: flex-start; 
     min-height: 100vh;
     margin: 0;
     color: #1a237e; /* Dark Blue Text */
-    overflow: hidden; /* 💥 เพื่อซ่อนฟองสบู่ที่อยู่นอกขอบ 💥 */
+    /* 💥 ลบ overflow: hidden เพื่อให้ Scroll ได้ 💥 */
+    padding-top: 20px; 
+    padding-bottom: 20px; 
 }
 
 .container {
@@ -18,22 +21,24 @@ body {
     width: 100%;
     max-width: 480px;
     text-align: center;
-    position: relative; /* 💥 สำหรับตำแหน่งของฟองสบู่ 💥 */
-    z-index: 1; /* ให้เนื้อหาหลักอยู่ด้านบนฟองสบู่ */
+    position: relative; 
+    z-index: 1; 
 }
 
-/* 💥 จัดรูปแบบ Header 2 บรรทัด 💥 */
+/* จัดรูปแบบ Header 2 บรรทัด */
 header h1 {
-    color: #1976d2; /* Main Blue */
+    color: #0d47a1; /* Darker Blue for prominence */
     margin-top: 5px;
-    font-size: 2em;
+    font-size: 2.2em;
     line-height: 1.1; 
+    font-weight: 700;
 }
 
 header h1 span {
-    display: block; /* Force BUBBLE LAB to new line */
+    display: block; 
     font-size: 0.7em; 
-    color: #0d47a1; /* Darker color for emphasis */
+    color: #1976d2; /* Main Blue */
+    font-weight: 500;
 }
 
 header i {
@@ -52,7 +57,7 @@ header i {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(25, 118, 210, 0.9); /* Opaque Blue Overlay */
+    background-color: rgba(25, 118, 210, 0.95); /* Opaque Blue Overlay */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,120 +68,102 @@ header i {
     background: white;
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
     text-align: center;
     max-width: 350px;
 }
 
 .welcome-icon {
     font-size: 4em;
-    color: #0d47a1; /* Darker Blue */
+    color: #0d47a1; 
     margin-bottom: 15px;
-}
-
-.modal-content h2 {
-    color: #0d47a1;
-    margin-bottom: 5px;
-}
-
-.modal-content p {
-    color: #3f51b5;
-    margin-bottom: 10px;
-}
-
-.modal-content h3 {
-    color: #1976d2;
-    margin-top: 5px;
-    font-size: 1.2em;
 }
 
 /* --- Selection Styles --- */
 .selection-box {
     text-align: left;
     margin-bottom: 20px;
-    padding: 15px;
+    padding: 20px;
     background: #f0f8ff; /* Very Light Blue */
-    border-left: 5px solid #64b5f6;
+    border: 1px solid #bbdefb; /* Light border for clean look */
     border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Soft shadow */
 }
 
 .selection-box h2 {
-    font-size: 1.2em;
+    font-size: 1.3em;
     color: #3f51b5;
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e0f7fa; /* Subtitle line */
+    padding-bottom: 8px;
 }
 
 .options-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    /* 💥 ทำให้ปุ่มอยู่ตรงกลางเพื่อความสมมาตร 💥 */
+    gap: 12px;
     justify-content: center; 
-}
-
-.grid-options {
-    /* ปรับ grid ให้มีพื้นที่ว่างด้านข้างถ้าจำนวนปุ่มไม่เต็มแถว */
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
 
 /* Buttons */
 .btn {
-    padding: 10px 15px;
+    padding: 12px 18px;
     border: none;
-    border-radius: 20px; /* Fully rounded buttons */
+    border-radius: 8px; /* Less rounded for modern look */
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
     transition: all 0.2s ease;
-}
-
-.large-btn {
-    padding: 12px 30px;
-    font-size: 1.1em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .water-btn, .tablet-btn, .fragrance-btn {
-    background-color: #e3f2fd; /* Lightest Blue */
+    background-color: #ffffff; 
     color: #1976d2;
-    border: 2px solid #64b5f6;
+    border: 2px solid #90caf9; /* Lighter border */
+}
+
+.water-btn:hover, .tablet-btn:hover, .fragrance-btn:hover {
+    background-color: #e3f2fd;
 }
 
 .water-btn.selected, .tablet-btn.selected, .fragrance-btn.selected {
     background-color: #1976d2; /* Main Blue */
     color: white;
-    border-color: #1976d2;
-    box-shadow: 0 4px 6px rgba(25, 118, 210, 0.3);
+    border-color: #0d47a1;
+    box-shadow: 0 3px 10px rgba(25, 118, 210, 0.4);
 }
 
 .primary-btn {
     background-color: #0d47a1; /* Darker Blue */
     color: white;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .secondary-btn {
     background-color: #64b5f6; /* Medium Blue */
-    color: #0d47a1;
+    color: white;
     width: 100%;
     margin-top: 15px;
 }
 
 .btn:disabled {
-    background-color: #bdbdbd;
-    color: #757575;
+    background-color: #e0e0e0;
+    color: #a0a0a0;
     cursor: not-allowed;
-    border-color: #9e9e9e;
+    border-color: #c0c0c0;
     box-shadow: none;
 }
 
 /* --- Mixing Styles --- */
 #mixing-screen {
-    position: relative; /* 💥 สำหรับตำแหน่งของฟองสบู่ 💥 */
+    position: relative; 
     text-align: center;
     padding: 50px 0;
-    overflow: hidden; /* ซ่อนฟองสบู่ที่ลอยเกินขอบ */
-    height: 300px; /* กำหนดความสูงเพื่อให้ฟองสบู่ลอยขึ้นไปได้ */
+    overflow: hidden; 
+    min-height: 250px; /* กำหนด Min-height เพื่อให้มีพื้นที่สำหรับฟองสบู่ */
 }
 
 .mixing-icon {
@@ -184,7 +171,7 @@ header i {
     color: #1976d2;
     animation: spin 1s infinite linear;
     position: relative;
-    z-index: 2; /* ให้อยู่ด้านบนฟองสบู่ */
+    z-index: 2; 
 }
 
 @keyframes spin {
@@ -195,19 +182,19 @@ header i {
 /* 💥 Bubble Animation Styles 💥 */
 .bubble-container {
     position: absolute;
-    bottom: 0; /* เริ่มจากด้านล่างของ mixing-screen */
+    bottom: 0; 
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* ไม่ให้รบกวนการคลิก */
+    pointer-events: none; 
     overflow: hidden;
 }
 
 .bubble {
     position: absolute;
-    background-color: rgba(173, 216, 230, 0.7); /* Light blue, semi-transparent */
+    background-color: rgba(173, 216, 230, 0.7); 
     border-radius: 50%;
-    opacity: 0; /* เริ่มต้นซ่อนไว้ */
+    opacity: 0; 
     animation: bubble-float linear infinite;
     box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5), 0 0 8px rgba(0, 191, 255, 0.3);
 }
@@ -238,28 +225,43 @@ header i {
 }
 
 .result-display {
-    padding: 20px;
+    padding: 30px 20px;
     background: #e1f5fe;
     border-radius: 12px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    border: 1px solid #b3e5fc;
 }
 
 .bubble-large {
     font-size: 6em;
     border-radius: 50%;
     transition: all 0.5s;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
 .summary-box {
     text-align: left;
-    padding: 15px;
-    border: 1px dashed #64b5f6;
+    padding: 20px;
+    border: 1px solid #90caf9;
     background: #f0f8ff;
     border-radius: 8px;
     margin-bottom: 20px;
 }
 
+.summary-box h3 {
+    font-size: 1.1em;
+    color: #1976d2;
+    margin-top: 0;
+}
+
 #final-score {
-    font-size: 2.2em;
+    font-size: 2.5em;
     color: #0d47a1;
+    margin: 10px 0;
+}
+
+#final-message {
+    font-weight: 500;
+    font-size: 1.1em;
+    color: #3f51b5;
 }
