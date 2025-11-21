@@ -6,7 +6,6 @@ body {
     background-color: #000a12; /* Very dark/almost black background */
     display: flex;
     justify-content: center;
-    /* แก้ไขปัญหา Scroll: ใช้ flex-start และลบ overflow: hidden */
     align-items: flex-start; 
     min-height: 100vh;
     margin: 0;
@@ -16,11 +15,11 @@ body {
 }
 
 .container {
-    /* 💥 ธีม Gradient สีน้ำเงินเข้มเหมือนในรูปภาพ 💥 */
+    /* 💥 ธีม Gradient สีน้ำเงินเข้ม 💥 */
     background: radial-gradient(circle at 50% 10%, #448aff 0%, #0d47a1 80%, #0d47a1 100%);
     padding: 30px;
-    border-radius: 24px; /* More rounded for mobile app look */
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5); /* Strong shadow for depth */
+    border-radius: 24px; 
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5); 
     width: 100%;
     max-width: 450px;
     text-align: center;
@@ -186,19 +185,20 @@ header i {
     min-height: 250px; 
 }
 
+/* ไอคอนการผสม: ใช้สีขาวและเงาสว่างเพื่อความโดดเด่น */
 .mixing-icon {
     font-size: 8em;
     color: #ffffff; 
     opacity: 0.9;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
-    animation: pulse-drop 2s infinite alternate; 
+    text-shadow: 0 0 20px #90caf9; /* Soft blue glow */
+    animation: pulse-mix 2s infinite alternate; /* เปลี่ยนชื่อ animation */
     position: relative;
     z-index: 2; 
 }
 
-@keyframes pulse-drop {
-    from { transform: scale(1); opacity: 0.9; }
-    to { transform: scale(1.05); opacity: 1; }
+@keyframes pulse-mix {
+    from { transform: scale(1) rotate(0deg); opacity: 0.9; }
+    to { transform: scale(1.05) rotate(5deg); opacity: 1; }
 }
 
 /* Bubble Animation Styles */
@@ -257,11 +257,13 @@ header i {
     margin-bottom: 25px;
 }
 
+/* ไอคอนผลลัพธ์: เป็นไอคอน lab result */
 .bubble-large {
     font-size: 6em;
     border-radius: 50%;
     transition: all 0.5s;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.9);
+    /* text-shadow จะถูกกำหนดด้วย JS ตามผลลัพธ์ */
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.9); 
 }
 
 .summary-box {
