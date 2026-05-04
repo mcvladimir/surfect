@@ -1,304 +1,54 @@
-/* ---------------------------------- */
-/* GLOBAL & CONTAINER STYLES     */
-/* ---------------------------------- */
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #001f3f; /* 💥 เปลี่ยนเป็นสีน้ำเงินเข้มตามธีม 💥 */
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; 
-    min-height: 100vh;
-    margin: 0;
-    color: #ffffff; /* เปลี่ยนเป็นสีขาวเพื่อให้เข้ากับพื้นหลังสีเข้ม */
-    padding-top: 20px; 
-    padding-bottom: 20px; 
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  margin: 0;
+  padding: 20px;
 }
 
-/* Modal and Container still use the blue gradient for the app interface */
 .container {
-    /* 💥 ธีม Gradient สีน้ำเงินเข้ม 💥 */
-    background: radial-gradient(circle at 50% 10%, #448aff 0%, #0d47a1 80%, #0d47a1 100%);
-    padding: 30px;
-    border-radius: 24px; 
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5); 
-    width: 100%;
-    max-width: 450px;
-    text-align: center;
-    position: relative; 
-    z-index: 1; 
-    color: #ffffff; /* Ensure text inside container is white */
+  max-width: 800px;
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+h1 {
+  text-align: center;
+}
+
+.question {
+  margin-bottom: 20px;
+}
+
+.options label {
+  margin-right: 10px;
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+  padding: 12px 25px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+#result {
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 8px;
+  background: #eef3ff;
+  text-align: center;
 }
 
 .hidden {
-    display: none !important;
-}
-
-/* ---------------------------------- */
-/* HEADER STYLES (Inside the Blue Container) */
-/* ---------------------------------- */
-header {
-    margin-bottom: 30px;
-}
-
-header h1 {
-    color: #ffffff; 
-    margin-top: 5px;
-    font-size: 2.5em;
-    line-height: 1.1; 
-    font-weight: 800;
-}
-
-header h1 span {
-    display: block; 
-    font-size: 0.6em; 
-    color: #90caf9; 
-    font-weight: 500;
-}
-
-header i {
-    font-size: 3.0em;
-    color: #ffffff;
-    margin-bottom: 10px;
-}
-
-
-/* ---------------------------------- */
-/* MODAL STYLES (Using dark blue body background) */
-/* ---------------------------------- */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 31, 63, 0.9); /* 💥 Modal background ใช้สีน้ำเงินเข้มที่ทึบแสง 💥 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal-content {
-    /* ใช้ Gradient เดียวกับ Container เพื่อให้เป็นธีมหลักของแอป */
-    background: radial-gradient(circle at 50% 10%, #448aff 0%, #0d47a1 80%, #0d47a1 100%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    max-width: 350px;
-    color: white;
-}
-
-.welcome-icon {
-    font-size: 4em;
-    color: #ffffff; 
-    margin-bottom: 15px;
-    text-shadow: 0 0 15px #448aff;
-}
-
-/* ---------------------------------- */
-/* SELECTION STYLES (Inside the Blue Container) */
-/* ---------------------------------- */
-.selection-box {
-    text-align: center; 
-    margin-bottom: 20px;
-    padding: 25px 20px;
-    /* กล่องสีขาวบนพื้นสีน้ำเงินเข้มเพื่อ Contrast */
-    background: #ffffff; 
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1); 
-    color: #1a237e; /* Dark text inside the white box */
-}
-
-.selection-box h2 {
-    font-size: 1.4em;
-    color: #0d47a1;
-    margin-top: 0;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #e3f2fd; 
-    padding-bottom: 8px;
-    font-weight: 700;
-}
-
-.options-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center; 
-}
-
-/* Buttons */
-.btn {
-    padding: 12px 18px;
-    border: none;
-    border-radius: 8px; 
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.water-btn, .tablet-btn, .fragrance-btn {
-    background-color: #ffffff; 
-    color: #1976d2;
-    border: 2px solid #bbdefb;
-}
-
-.water-btn.selected, .tablet-btn.selected, .fragrance-btn.selected {
-    background-color: #1976d2; 
-    color: white;
-    border-color: #0d47a1;
-    box-shadow: 0 3px 15px rgba(25, 118, 210, 0.6);
-    transform: translateY(-1px);
-}
-
-.primary-btn {
-    background-color: #448aff; /* Bright Blue */
-    color: white;
-    width: 100%;
-    margin-top: 20px;
-}
-.secondary-btn {
-    background-color: #0d47a1; /* Dark Blue */
-    color: white;
-    width: 100%;
-    margin-top: 20px;
-}
-
-.btn:disabled {
-    background-color: #424242;
-    color: #9e9e9e;
-    cursor: not-allowed;
-    border-color: #616161;
-    box-shadow: none;
-}
-
-/* ---------------------------------- */
-/* MIXING STYLES            */
-/* ---------------------------------- */
-#mixing-screen {
-    position: relative; 
-    text-align: center;
-    padding: 50px 0;
-    min-height: 250px; 
-    overflow: hidden; /* Ensure bubbles don't overflow the container */
-}
-
-/* สไตล์สำหรับ Icon Mixing ใหม่ (Vial) */
-.mixing-icon {
-    font-size: 6em; 
-    color: #ffffff; 
-    opacity: 0.9;
-    /* ใช้ filter เพื่อให้สีดูเข้ากับธีมน้ำเงินมากขึ้น */
-    filter: drop-shadow(0 0 10px #90caf9); 
-    animation: shake-mix 0.15s infinite alternate; /* 💥 เปลี่ยนเป็นแอนิเมชันเขย่าเร็ว 💥 */
-    position: relative;
-    z-index: 2; 
-    display: block; 
-    margin: 0 auto;
-}
-
-/* Keyframes สำหรับการเขย่า (Shaking) */
-@keyframes shake-mix {
-    0% { transform: translate(1px, 1px) rotate(0deg) scale(1); }
-    25% { transform: translate(-1px, -1px) rotate(-1deg) scale(1.02); }
-    50% { transform: translate(1px, -2px) rotate(1deg) scale(1.04); }
-    75% { transform: translate(-2px, 1px) rotate(-1deg) scale(1.02); }
-    100% { transform: translate(2px, 0px) rotate(0deg) scale(1); }
-}
-
-/* Bubble Animation Styles */
-.bubble-container {
-    position: absolute;
-    bottom: 0; 
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; 
-    overflow: hidden;
-    /* 💥 ทำให้ฟองสบู่ครอบคลุมทั้งหน้า Mixing 💥 */
-}
-
-.bubble {
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.3); /* White bubbles for contrast */
-    border-radius: 50%;
-    opacity: 0; 
-    animation: bubble-float linear infinite;
-    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.2);
-}
-
-/* ปรับแอนิเมชันให้ลอยจากด้านล่างขึ้นไปด้านบนของ Container */
-@keyframes bubble-float {
-    0% {
-        transform: translateY(100%) scale(0); /* เริ่มจากด้านล่างสุด */
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.8;
-        transform: translateY(-10%) scale(0.5);
-    }
-    80% {
-        opacity: 0.8;
-        transform: translateY(-80%) scale(1);
-    }
-    100% {
-        transform: translateY(-100%) scale(1.2);
-        opacity: 0;
-    }
-}
-
-
-/* ---------------------------------- */
-/* RESULT STYLES            */
-/* ---------------------------------- */
-#result-screen {
-    text-align: center;
-    color: white; 
-}
-
-.result-display {
-    padding: 30px 20px;
-    background: rgba(255, 255, 255, 0.1); 
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    margin-bottom: 25px;
-}
-
-.bubble-large {
-    font-size: 6em;
-    border-radius: 50%;
-    transition: all 0.5s;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.9); 
-}
-
-.summary-box {
-    text-align: left;
-    padding: 20px;
-    background: #ffffff; /* กล่องสีขาวสำหรับ Summary */
-    border-radius: 8px;
-    margin-bottom: 20px;
-    color: #1a237e; /* Dark text inside the white box */
-}
-
-.summary-box h3 {
-    font-size: 1.1em;
-    color: #0d47a1;
-    margin-top: 0;
-}
-
-#final-score {
-    font-size: 2.5em;
-    color: #ffffff; 
-    margin: 10px 0;
-    text-shadow: 0 0 10px #448aff;
-}
-
-#final-message {
-    font-weight: 500;
-    font-size: 1.1em;
-    color: #90caf9;
+  display: none;
 }
