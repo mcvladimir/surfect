@@ -1,119 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLUELAND Bubble Lab</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <title>Management Archetype Assessment</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- WELCOME POP-UP -->
-    <div id="welcome-modal" class="modal">
-        <div class="modal-content">
-            <!-- ไอคอนต้อนรับ - ใช้ไอคอนเดิม (ถ้ามี) หรือไอคอนทั่วไป -->
-            <i class="fas fa-hand-sparkles welcome-icon"></i> 
-            <h2>Welcome to BLUELAND.</h2>
-            <p>Are you ready to save the world with us?</p>
-            <h3>Let's make bubbles together!</h3>
-            <button id="start-button" class="btn primary-btn large-btn">Enter</button>
-        </div>
-    </div>
+<div class="container">
+  <h1>Management Readiness Assessment</h1>
+  <p>Rate each statement from 1 (Strongly Disagree) to 5 (Strongly Agree)</p>
 
-    <div class="container">
-        
-        <!-- Game Screen Container (Holds all steps) -->
-        <div id="game-screen" class="hidden">
-            <header>
-                <!-- ไอคอน Header - ใช้ไอคอนที่ดูเป็นห้องแล็บ -->
-                <i class="fas fa-flask"></i> 
-                <h1>BLUELAND<br><span>BUBBLE LAB</span></h1> 
-            </header>
+  <form id="quizForm"></form>
 
-            <!-- 1. Water Selection -->
-            <div id="step-1" class="game-step">
-                <section class="selection-box">
-                    <h2>💧 Step 1: Add Water (Oz)</h2>
-                    <div id="water-options" class="options-group">
-                        <button data-oz="6" class="water-btn btn">6 Oz</button>
-                        <button data-oz="9" class="water-btn btn">9 Oz</button>
-                        <button data-oz="12" class="water-btn btn">12 Oz</button>
-                    </div>
-                </section>
-                <button id="step-1-next" class="btn secondary-btn" disabled>Enter</button>
-            </div>
+  <button onclick="calculateResult()">See My Result</button>
 
-            <!-- 2. Fragrance Selection -->
-            <div id="step-2" class="game-step hidden">
-                <section class="selection-box">
-                    <h2>🌸 Step 2: Choose Fragrance</h2>
-                    <div id="fragrance-options" class="options-group grid-options">
-                        <!-- Fragrance buttons will be injected by JavaScript -->
-                    </div>
-                </section>
-                <button id="step-2-next" class="btn secondary-btn" disabled>Enter</button>
-            </div>
+  <div id="result" class="hidden"></div>
+</div>
 
-            <!-- 3. Tablet Count -->
-            <div id="step-3" class="game-step hidden">
-                <section class="selection-box">
-                    <h2>🧼 Step 3: Add Soap Tablets</h2>
-                    <div id="tablet-options" class="options-group">
-                        <button data-tablets="1" class="tablet-btn btn">1 Tablet</button>
-                        <button data-tablets="2" class="tablet-btn btn">2 Tablets</button>
-                        <button data-tablets="3" class="tablet-btn btn">3 Tablets</button>
-                        <button data-tablets="4" class="tablet-btn btn">4 Tablets</button> 
-                        <button data-tablets="5" class="tablet-btn btn">5 Tablets</button> 
-                        <button data-tablets="6" class="tablet-btn btn">6 Tablets</button> 
-                    </div>
-                </section>
-                <button id="mix-button" class="btn primary-btn" disabled>MIX & SHAKE!</button>
-            </div>
-            
-        </div>
-
-        <!-- Mixing Screen (Hidden initially) -->
-        <div id="mixing-screen" class="hidden">
-            <header>
-                <i class="fas fa-flask"></i>
-                <h1>BLUELAND<br><span>BUBBLE LAB</span></h1>
-            </header>
-            <!-- 💥 เปลี่ยนกลับเป็นไอคอนสบู่ตามคำขอของผู้ใช้ 💥 -->
-            <i id="mixing-icon" class="fas fa-soap mixing-icon"></i>
-            <h2 style="color: #ffffff; font-size: 1.5em; margin-top: 30px;">Mixing in progress...</h2>
-            <p style="color: #bbdefb; margin-top: 10px;">Please wait while the tablets dissolve and surfactants activate.</p>
-        </div>
-
-        <!-- Result Screen (Hidden initially) -->
-        <div id="result-screen" class="hidden">
-            <header>
-                <i class="fas fa-flask"></i>
-                <h1>BLUELAND<br><span>BUBBLE LAB</span></h1>
-            </header>
-
-            <div class="result-display">
-                <!-- ไอคอนผลลัพธ์ -->
-                <i id="bubble-icon" class="fas fa-vial-circle-check bubble-large"></i>
-                <p id="bubble-result-text"></p>
-            </div>
-
-            <div class="summary-box">
-                <h3>Recipe Used:</h3>
-                <p><strong>Water:</strong> <span id="water-summary"></span></p>
-                <p><strong>Tablets:</strong> <span id="tablets-summary"></span></p>
-                <p><strong>Scent:</strong> <span id="fragrance-summary"></span></p>
-            </div>
-
-            <h2 id="final-score"></h2>
-            <p id="final-message"></p>
-
-            <button id="reset-button" class="btn primary-btn large-btn">Try Another Recipe</button>
-        </div>
-
-    </div>
-    
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
