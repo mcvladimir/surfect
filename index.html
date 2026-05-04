@@ -3,43 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Talent Management Readiness &amp; Program Need Survey</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./tm-survey.css">
+  <title>HR Readiness Page</title>
+  <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <div class="bg-orb orb-a" aria-hidden="true"></div>
-  <div class="bg-orb orb-b" aria-hidden="true"></div>
+  <main class="card">
+    <h1>HR Readiness Website</h1>
+    <p>This page is saved in your MBA folder with a pink, yellow, and blue style theme.</p>
+    <button id="testBtn" type="button">Test JavaScript</button>
+    <p id="statusText">Click the button to test script.</p>
+  </main>
 
-  <div class="container">
-    <header class="card hero">
-      <span class="chip">TMP readiness</span>
-      <h1>Talent Management Readiness &amp; Program Need Survey</h1>
-      <p>Use the scale <strong>1 = Strongly disagree</strong> through <strong>5 = Strongly agree</strong>. Your answers produce four dimension scores (R, B, A, M) and one leadership archetype using the rules you defined.</p>
-    </header>
-
-    <form id="tmForm" class="card" novalidate></form>
-
-    <section id="resultPanel" class="card" aria-live="polite">
-      <h2 style="margin-top:0">Your record</h2>
-      <p class="meta-line"><span id="metaAge"></span> · <span id="metaPosition"></span></p>
-      <div class="pill-row">
-        <span class="pill" id="prepPill"></span>
-      </div>
-
-      <h2 style="margin-top:18px">Step 1: Four dimension scores</h2>
-      <p style="font-size:14px">Normalized % = score ÷ max for that dimension.</p>
-      <div id="dimensionBars"></div>
-
-      <h2 style="margin-top:8px">Archetype result</h2>
-      <div id="archetypeDetail"></div>
-
-      <div id="tmpSummary" class="tmp-summary"></div>
-    </section>
-  </div>
-
-  <script src="./tm-survey.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>
